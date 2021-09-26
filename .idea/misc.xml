@@ -3,7 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.378974358974359" />
+        <entry key="app/src/main/res/drawable/gradient_black_bottom.xml" value="0.38" />
+        <entry key="app/src/main/res/drawable/grid_state.xml" value="0.39282051282051283" />
+        <entry key="app/src/main/res/drawable/ic_grid_view.xml" value="0.38" />
+        <entry key="app/src/main/res/drawable/ic_grid_view_dark.xml" value="0.38" />
+        <entry key="app/src/main/res/drawable/ic_list_view.xml" value="0.38" />
+        <entry key="app/src/main/res/drawable/ic_list_view_dark.xml" value="0.39282051282051283" />
+        <entry key="app/src/main/res/drawable/list_state.xml" value="0.39282051282051283" />
+        <entry key="app/src/main/res/drawable/menu_state.xml" value="0.38" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3546875" />
+        <entry key="app/src/main/res/layout/rv_item_grid_photo.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/rv_item_list_photo.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/menu/main_meu.xml" value="0.3697916666666667" />
       </map>
     </option>
   </component>
