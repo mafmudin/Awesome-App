@@ -2,11 +2,9 @@ package com.example.awesomeapp.base
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import android.net.NetworkInfo
-
 import android.net.ConnectivityManager
-import java.lang.Exception
+import android.net.NetworkInfo
+import androidx.appcompat.app.AppCompatActivity
 
 
 open class BaseActivity: AppCompatActivity() {

@@ -6,14 +6,13 @@ import com.example.awesomeapp.base.BaseViewModel
 import com.example.awesomeapp.model.Photo
 import com.example.awesomeapp.networking.Either
 import com.example.awesomeapp.repository.PhotoRepository
-import timber.log.Timber
 
 class PhotoViewModel(private val repository: PhotoRepository): BaseViewModel() {
     val photoResult = MutableLiveData<MutableList<Photo>>()
-    suspend fun insert(photo: Photo) = repository.insert(photo)
-    suspend fun update(photo: Photo) = repository.update(photo)
-    suspend fun delete(photo: Photo) = repository.delete(photo)
-    suspend fun insertPhotos(photos: MutableList<Photo>) = repository.insertPhotos(photos)
+    fun insert(photo: Photo) = repository.insert(photo)
+    fun update(photo: Photo) = repository.update(photo)
+    fun delete(photo: Photo) = repository.delete(photo)
+    fun insertPhotos(photos: MutableList<Photo>) = repository.insertPhotos(photos)
 
 
     fun getPhoto(lifecycleOwner: LifecycleOwner, page:Int, api:String){
@@ -33,7 +32,7 @@ class PhotoViewModel(private val repository: PhotoRepository): BaseViewModel() {
                 }
             }
         }else{
-            repository.getPhoto(page).observe(lifecycleOwner, { it ->
+            repository.getPhoto(page).observe(lifecycleOwner, {
                 photoResult.postValue(it)
             })
         }

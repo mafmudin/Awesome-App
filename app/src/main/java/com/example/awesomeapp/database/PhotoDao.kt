@@ -1,7 +1,6 @@
 package com.example.awesomeapp.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.example.awesomeapp.model.Photo

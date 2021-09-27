@@ -7,9 +7,7 @@ import com.example.awesomeapp.networking.RetrofitInstance
 import com.example.awesomeapp.networking.parse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class PhotoRepository(private val databaseDB: DatabaseDB) {
     fun insert(photo: Photo) = databaseDB.getPhotoDao().insert(photo)

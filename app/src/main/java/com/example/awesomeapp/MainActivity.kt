@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,9 +14,8 @@ import com.example.awesomeapp.database.DatabaseDB
 import com.example.awesomeapp.model.Photo
 import com.example.awesomeapp.networking.Constant
 import com.example.awesomeapp.repository.PhotoRepository
-import com.example.awesomeapp.view.BaseView
 import com.example.awesomeapp.viewmodels.PhotoViewModel
-import com.example.awesomeapp.viewmodels.ViewModelVactory
+import com.example.awesomeapp.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
@@ -25,7 +23,7 @@ class MainActivity : BaseActivity(){
     lateinit var databaseDB: DatabaseDB
     lateinit var repository: PhotoRepository
     lateinit var viewModel: PhotoViewModel
-    lateinit var factory: ViewModelVactory
+    lateinit var factory: ViewModelFactory
     lateinit var photoAdapter : PhotosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +33,11 @@ class MainActivity : BaseActivity(){
         setSupportActionBar(toolbar)
         collapsingToolbar.title = "Awesome App"
         collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.white))
-        collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.transparant))
+        collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.transparent))
 
         databaseDB = DatabaseDB.getDatabase(this)
         repository = PhotoRepository(databaseDB)
-        factory = ViewModelVactory(repository)
+        factory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[PhotoViewModel::class.java]
 
         photoAdapter = PhotosAdapter(0, object : PhotosAdapter.LocationAdapterListener{
@@ -82,9 +80,6 @@ class MainActivity : BaseActivity(){
                 Timber.e("RESPONSE RESULT %s", it)
                 photoAdapter.updateList(it)
             })
-        }
-        if(photoAdapter.list.size > 0){
-
         }
         viewModel.getPhoto(this, 1, Constant.apiKey)
     }

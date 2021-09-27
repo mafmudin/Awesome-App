@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.awesomeapp.repository.PhotoRepository
 import java.lang.Exception
 
-class ViewModelVactory(private val repository: PhotoRepository): ViewModelProvider.NewInstanceFactory(){
+class ViewModelFactory(private val repository: PhotoRepository): ViewModelProvider.NewInstanceFactory(){
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         try {
             val cons = modelClass.getDeclaredConstructor(PhotoRepository::class.java)

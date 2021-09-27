@@ -16,17 +16,17 @@ import com.example.awesomeapp.model.Photo
 abstract class DatabaseDB : RoomDatabase() {
         companion object{
                 @Volatile
-                private var INSATANCE: DatabaseDB? = null
+                private var INSTANCE: DatabaseDB? = null
                 fun getDatabase(context: Context): DatabaseDB{
-                        return INSATANCE ?: synchronized(this){
-                                val instancae = Room.databaseBuilder(
+                        return INSTANCE ?: synchronized(this){
+                                val instance = Room.databaseBuilder(
                                         context.applicationContext,
                                         DatabaseDB::class.java,
                                         "databaseku"
                                 ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
-                                INSATANCE = instancae
-                                instancae
+                                INSTANCE = instance
+                                instance
                         }
                 }
         }
