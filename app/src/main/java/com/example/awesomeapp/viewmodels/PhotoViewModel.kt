@@ -6,6 +6,7 @@ import com.example.awesomeapp.base.BaseViewModel
 import com.example.awesomeapp.model.Photo
 import com.example.awesomeapp.networking.Either
 import com.example.awesomeapp.repository.PhotoRepository
+import timber.log.Timber
 
 class PhotoViewModel(private val repository: PhotoRepository): BaseViewModel() {
     val photoResult = MutableLiveData<MutableList<Photo>>()
@@ -17,19 +18,25 @@ class PhotoViewModel(private val repository: PhotoRepository): BaseViewModel() {
 
     fun getPhoto(lifecycleOwner: LifecycleOwner, page:Int, api:String){
         isLoading.postValue(true)
-        repository.getPhotos(page, api){
-            isLoading.postValue(false)
-            when(it){
-                is Either.Left -> {
-                    photoResult.postValue(it.left)
-                    repository.insertPhotos(it.left!!)
-                }
-                is Either.Right -> {
-                    repository.getPhoto(page).observe(lifecycleOwner, { it ->
-                        photoResult.postValue(it)
-                    })
+        if (internetIsConnected()){
+            repository.getPhotos(page, api){
+                when(it){
+                    is Either.Left -> {
+                        isLoading.postValue(false)
+                        photoResult.postValue(it.left)
+                        repository.insertPhotos(it.left!!)
+                    }
+                    is Either.Right -> {
+                        isLoading.postValue(false)
+                        isError.postValue(it.right)
+                    }
                 }
             }
+        }else{
+            repository.getPhoto(page).observe(lifecycleOwner, { it ->
+                photoResult.postValue(it)
+            })
         }
+
     }
 }

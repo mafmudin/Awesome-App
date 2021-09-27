@@ -19,13 +19,4 @@ open class BaseActivity: AppCompatActivity() {
         return connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)!!.state == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)!!.state == NetworkInfo.State.CONNECTED
     }
-
-    open fun internetIsConnected(): Boolean {
-        return try {
-            val command = "ping -c 1 google.com"
-            Runtime.getRuntime().exec(command).waitFor() == 0
-        } catch (e: Exception) {
-            false
-        }
-    }
 }

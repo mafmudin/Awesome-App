@@ -26,6 +26,7 @@ class PhotoRepository(private val databaseDB: DatabaseDB) {
                 {
                     callBack(Either.Left(it.photos))
                 },{
+                    it.printStackTrace()
                     callBack(Either.Right(it))
                 }
             )
