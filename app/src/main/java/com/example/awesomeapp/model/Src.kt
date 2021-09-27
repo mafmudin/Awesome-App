@@ -2,6 +2,7 @@ package com.example.awesomeapp.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Src(
     @SerializedName("landscape")
@@ -20,4 +21,4 @@ data class Src(
     val small: String,
     @SerializedName("tiny")
     val tiny: String
-)
+):Serializable

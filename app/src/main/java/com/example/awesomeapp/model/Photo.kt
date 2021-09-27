@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "Photo")
 data class Photo(
@@ -29,4 +30,4 @@ data class Photo(
     val url: String,
     @SerializedName("width")
     val width: Int
-)
+):Serializable

@@ -31,4 +31,5 @@
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="actionMenuTextColor">@color/darkGrey</item>
     </style>
+
 </resources>

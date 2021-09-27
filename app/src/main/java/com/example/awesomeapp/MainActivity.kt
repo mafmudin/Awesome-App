@@ -1,5 +1,6 @@
 package com.example.awesomeapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -47,9 +48,10 @@ class MainActivity : BaseActivity(){
 
         photoAdapter = PhotosAdapter(0, object : PhotosAdapter.LocationAdapterListener{
             override fun onClickList(data: Photo, position: Int) {
-
+                val intent = Intent(this@MainActivity, DetailPhotoActivity::class.java)
+                intent.putExtra("data", data)
+                startActivity(intent)
             }
-
         })
 
         llm = GridLayoutManager(this@MainActivity, 2)
