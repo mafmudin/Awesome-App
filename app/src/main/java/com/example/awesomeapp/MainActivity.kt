@@ -3,6 +3,7 @@ package com.example.awesomeapp
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -58,10 +59,22 @@ class MainActivity : BaseActivity(){
             isLoading.observe(this@MainActivity, {
                 if (it){
                     //TODO show dialog
-                    Timber.e(("Loading"))
+                    if (photoAdapter.viewType == 0){
+                        gridShimmer.visibility = View.VISIBLE
+                        gridShimmer.startShimmer()
+                    }else{
+                        listShimmer.visibility = View.VISIBLE
+                        listShimmer.startShimmer()
+                    }
                 }else{
                     //TODO dismiss dialog
-                    Timber.e("Done loading")
+                    if (photoAdapter.viewType == 0){
+                        gridShimmer.visibility = View.GONE
+                        gridShimmer.stopShimmer()
+                    }else{
+                        listShimmer.visibility = View.GONE
+                        listShimmer.stopShimmer()
+                    }
                 }
             })
 
@@ -70,7 +83,9 @@ class MainActivity : BaseActivity(){
                 photoAdapter.updateList(it)
             })
         }
+        if(photoAdapter.list.size > 0){
 
+        }
         viewModel.getPhoto(this, 1, Constant.apiKey)
     }
 
