@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.awesomeapp.R
 import com.example.awesomeapp.model.Photo
 import kotlinx.android.synthetic.main.rv_item_grid_photo.view.*
@@ -18,6 +19,11 @@ class PhotosAdapter(var viewType : Int, private val listener: LocationAdapterLis
         notifyDataSetChanged()
     }
 
+    fun additem(list: MutableList<Photo>) {
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
+
     fun updateViewType(viewType: Int){
         this.viewType = viewType
         notifyDataSetChanged()
@@ -28,7 +34,10 @@ class PhotosAdapter(var viewType : Int, private val listener: LocationAdapterLis
 
         override fun bind(data: Photo) {
             with(itemView) {
-                Glide.with(this).load(data.src.tiny).into(ivPhoto)
+                Glide.with(this)
+                    .load(data.src.tiny)
+                    .into(ivPhoto)
+
                 tvTitle.text = data.photographer
                 itemView.setOnClickListener {
                     listener.onClickList(data, position)

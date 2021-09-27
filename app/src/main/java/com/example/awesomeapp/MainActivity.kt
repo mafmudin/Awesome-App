@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,10 @@ class MainActivity : BaseActivity(){
     lateinit var viewModel: PhotoViewModel
     lateinit var factory: ViewModelFactory
     lateinit var photoAdapter : PhotosAdapter
+
+    var page = 1
+
+    lateinit var llm: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +52,9 @@ class MainActivity : BaseActivity(){
 
         })
 
+        llm = GridLayoutManager(this@MainActivity, 2)
         rvPhotos.apply {
-            layoutManager = GridLayoutManager(this@MainActivity, 2)
+            layoutManager = llm
             adapter = photoAdapter
         }
 
@@ -56,7 +62,6 @@ class MainActivity : BaseActivity(){
         viewModel.apply {
             isLoading.observe(this@MainActivity, {
                 if (it){
-                    //TODO show dialog
                     if (photoAdapter.viewType == 0){
                         gridShimmer.visibility = View.VISIBLE
                         gridShimmer.startShimmer()
@@ -65,7 +70,6 @@ class MainActivity : BaseActivity(){
                         listShimmer.startShimmer()
                     }
                 }else{
-                    //TODO dismiss dialog
                     if (photoAdapter.viewType == 0){
                         gridShimmer.visibility = View.GONE
                         gridShimmer.stopShimmer()
@@ -78,10 +82,28 @@ class MainActivity : BaseActivity(){
 
             photoResult.observe(this@MainActivity,{
                 Timber.e("RESPONSE RESULT %s", it)
-                photoAdapter.updateList(it)
+                if (page == 1){
+                    photoAdapter.updateList(it)
+                }else{
+                    photoAdapter.additem(it)
+                }
+
+                if (it.isEmpty()){
+                    llEmpty.visibility = View.VISIBLE
+                }else{
+                    llEmpty.visibility = View.GONE
+                }
             })
         }
-        viewModel.getPhoto(this, 1, Constant.apiKey)
+        viewModel.getPhoto(this, page, Constant.apiKey)
+        nestedScroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY == v!!.getChildAt(0).measuredHeight - v.measuredHeight && isInternetConnected(this)){
+                page ++
+                viewModel.getPhoto(this@MainActivity, page, Constant.apiKey)
+                Timber.e("PAGE %s", page)
+            }
+        })
+
     }
 
     //TODO change menu color while selected
@@ -94,16 +116,18 @@ class MainActivity : BaseActivity(){
         when(item.itemId){
             R.id.menuGrid -> {
                 photoAdapter.updateViewType(0)
+                llm = GridLayoutManager(this@MainActivity, 2)
                 rvPhotos.apply {
-                    layoutManager = GridLayoutManager(this@MainActivity, 2)
+                    layoutManager = llm
                     adapter = photoAdapter
                 }
             }
 
             R.id.menuList -> {
+                llm = LinearLayoutManager(this@MainActivity)
                 photoAdapter.updateViewType(1)
                 rvPhotos.apply {
-                    layoutManager = LinearLayoutManager(this@MainActivity)
+                    layoutManager = llm
                     adapter = photoAdapter
                 }
             }

@@ -19,6 +19,6 @@ interface PhotoDao {
     @Delete
     fun delete(photo: Photo)
 
-    @Query("SELECT * FROM Photo LIMIT 20 OFFSET :pageIndex")
+    @Query("SELECT * FROM Photo LIMIT 15 OFFSET :pageIndex")
     fun getPhotos(pageIndex: Int): LiveData<MutableList<Photo>>
 }
